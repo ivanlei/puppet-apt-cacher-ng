@@ -16,7 +16,7 @@ class apt-cacher-ng::client($server = "", $servers = "", $autodetect = true, $ve
         default: { fail("servers must only be specified with autodetect=true") }
       }
       file { "/etc/apt/apt.conf.d/71proxy":
-        content => 'Acquire::http { Proxy "http://${server}"; };',
+        content => "Acquire::http { Proxy \"http://${server}\"; };",
       }
       file { "/etc/apt/apt.conf.d/30detectproxy":
         ensure => absent,
