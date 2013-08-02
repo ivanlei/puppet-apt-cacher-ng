@@ -1,6 +1,6 @@
 class { 'apt-cacher-ng::client':
-  # server     => "192.168.31.42:3142",
-  servers    => ["192.168.31.41:3142", "192.168.31.42:3142"],
+  # Only one of these servers should be found
+  servers    => ["${aptserver_ip}:3142", "${bad_aptserver_ip}:3142"],
   verbose    => false,
   autodetect => true,
 }

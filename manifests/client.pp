@@ -1,4 +1,10 @@
-class apt-cacher-ng::client($server = "", $servers = "", $autodetect = true, $verbose = true) {
+class apt-cacher-ng::client(
+  $server = "",
+  $servers = "",
+  $autodetect = true,
+  $verbose = true
+) {
+
   File {
     owner  => root,
     group  => root,

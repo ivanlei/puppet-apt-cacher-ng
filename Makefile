@@ -1,12 +1,18 @@
-apply = puppet apply --noop --modulepath=tests/modules
-
-smoke:
-	$(apply) tests/smoke.pp
-	$(apply) tests/client.pp
-	$(apply) tests/autodetect.pp
+apply = puppet apply --noop --modulepath=..
+up = vagrant up
+provider = --provider vmware_fusion
 
 test: tests/*.pp
 	find tests -name \*.pp | xargs -n 1 -t $(apply)
 
-vm:
-	vagrant up
+vm_server:
+	$(up) server $(provider)
+
+vm_client:
+	$(up) client $(provider)
+
+vm_autodetect:
+	$(up) autodetect $(provider)
+
+vm_autoupdate:
+	$(up) autoupdate $(provider)

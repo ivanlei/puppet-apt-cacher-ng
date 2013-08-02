@@ -1,0 +1,24 @@
+FORGE
+  remote: http://forge.puppetlabs.com
+  specs:
+    puppetlabs/stdlib (4.1.0)
+
+GIT
+  remote: git://github.com/puppetlabs/puppetlabs-apt.git
+  ref: master
+  sha: 6cde028332d73125fff8cf366bd6fb5bb245071c
+  specs:
+    apt (1.2.0)
+      puppetlabs/stdlib (>= 2.2.1)
+
+GIT
+  remote: git://github.com/puppetlabs/puppetlabs-stdlib.git
+  ref: master
+  sha: e8dcc691934f11172e2a3b5064a375f6b025865b
+  specs:
+    stdlib (4.1.0)
+
+DEPENDENCIES
+  apt (>= 0)
+  stdlib (>= 0)
+
