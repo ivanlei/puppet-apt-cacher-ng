@@ -1,4 +1,4 @@
-class apt-cacher-ng(
+class apt-cacher-ng::server(
   $version = 'installed'
 ) {
   package { 'apt-cacher-ng':

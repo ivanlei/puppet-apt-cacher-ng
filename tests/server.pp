@@ -1,2 +1,2 @@
-class { 'apt-cacher-ng':
+class { 'apt-cacher-ng::server':
 }

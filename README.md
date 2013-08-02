@@ -11,10 +11,10 @@ Other contributors:
 
 ## Installation in Production
 
-* Edit the definition for your server to include `apt-cacher-ng`, perhaps
+* Edit the definition for your server to include `apt-cacher-ng::server`, perhaps
   specifying `version`:
   ```ruby      
-  class { 'apt-cacher-ng':
+  class { 'apt-cacher-ng::server':
     # version => '0.4.6-1ubuntu1',
   }
   ```
@@ -28,7 +28,7 @@ Other contributors:
   }
   ```
 
-* To force the client to run ```apt-get update``` before other puppet actions, use the ```apt-cacher-ng::autoupdate_client```:
+* To force the client to run `apt-get update` before other puppet actions, use the `apt-cacher-ng::autoupdate_client`:
   ```ruby
   class { 'apt-cacher-ng::autoupdate_client':
     server => "192.168.31.42:3142"

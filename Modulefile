@@ -1,5 +1,3 @@
-Modulefile
-
 name          'ivanlei-apt-cacher-ng'
 version       '1.0.0'
 summary       'Puppet module for apt-cacher-ng'
