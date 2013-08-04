@@ -23,10 +23,11 @@ Original author: [Alban Peignier], Forked From: [Garth Kidd]
   }
   ```
 
-* To force the client to run `apt-get update` before other puppet actions, use the `apt_cacher_ng::autoupdate_client`:
+* To force the client to run `apt-get update`:
   ```ruby
-  class { 'apt_cacher_ng::autoupdate_client':
-    servers => ['192.168.31.42:3142']
+  class { 'apt_cacher_ng::client':
+    servers    => ['192.168.31.42:3142'],
+    apt_update => true,
   }
   ```
 
