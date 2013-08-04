@@ -1,4 +1,4 @@
-apply = puppet apply --noop --modulepath=..
+apply = puppet apply --noop --modulepath=.. --verbose --debug
 parse = puppet parser validate
 lint = puppet-lint --no-80chars-check --with-filename
 

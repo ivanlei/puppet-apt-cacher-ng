@@ -15,6 +15,7 @@ Vagrant.configure('2') do |global_config|
     },
     :client => {
       :ip           => '10.6.66.20',
+      :debug        => true,
     },
     :autodetect => {
       :ip           => '10.6.66.30',
@@ -48,7 +49,6 @@ Vagrant.configure('2') do |global_config|
       config.ssh.forward_agent  = forward_ssh
       config.vm.hostname        = vm_name
       config.vm.network :private_network, ip: vm_settings[:ip]
-      config.vm.synced_folder '../../..', '/vms'
 
       ###############
       # VirtualBox  #
@@ -56,6 +56,7 @@ Vagrant.configure('2') do |global_config|
       config.vm.provider :virtualbox do |vb|
         vb.gui = enable_gui
 
+        # VBoxManager Reference - http://www.virtualbox.org/manual/ch08.html
         vb.customize [
           'modifyvm',     :id,
           '--memory',     ram,
@@ -95,10 +96,8 @@ Vagrant.configure('2') do |global_config|
         puppet.module_path    = '..'
         puppet.manifests_path = './tests'
         puppet.manifest_file  = "#{vm_name}.pp"
-        puppet.facter = {
-          'aptserver_ip'      => aptserver_ip,
-          'bad_aptserver_ip'  => bad_aptserver_ip,
-        }
+        puppet.hiera_config_path = '/vms/hiera.yaml'
+        puppet.working_directory = '/vms/hieradata'
         if debug
           puppet.options = "--verbose --debug"
         end

@@ -16,7 +16,7 @@
 #
 class apt_cacher_ng::client(
   $servers    = undef,
-  $autodetect = true,
+  $autodetect = false,
   $verbose    = true,
   $apt_update = false,
 ) {
