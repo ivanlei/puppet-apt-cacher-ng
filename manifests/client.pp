@@ -1,3 +1,19 @@
+# == Class: apt_cacher_ng::client
+# Configures a machine to use an apt-cacher-ng server for APT updates
+#
+# === Parameters
+#
+# [servers] An array of servers in the format ip:port or hostname:port.  Required.
+# [autodetect] Fallback to direct access if proxy is unavailable.  Optional.  Default true.
+# [verbose] Whether to have APT print server status.  Optional.  Default true.
+# [apt_update] Whether to apt-get update during provisioning.  Optional.  Default false.
+#
+# === Examples
+# class { 'apt_cacher_ng::client':
+#   servers    => ['192.168.10.11:3142']
+#   apt_update => true,
+# }
+#
 class apt_cacher_ng::client(
   $servers    = undef,
   $autodetect = true,

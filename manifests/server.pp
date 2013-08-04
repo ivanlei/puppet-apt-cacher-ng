@@ -1,26 +1,37 @@
+# == Class: apt_cacher_ng::server
+# Configures a machine to be an apt-cacher-ng server for APT updates
+#
+# === Parameters
+#
+# [version] Version of the apt-cacher-ng to install.  Optional. Default: 'latest'
+#
+# === Examples
+# class { 'apt_cacher_ng::server':
+# }
+#
 class apt_cacher_ng::server(
   $version = 'installed'
 ) {
-  package { 'apt_cacher_ng':
+  package { 'apt-cacher-ng':
     ensure => $version,
   }
 
-  service { 'apt_cacher_ng':
+  service { 'apt-cacher-ng':
     ensure  => running,
-    require => Package['apt_cacher_ng'],
+    require => Package['apt-cacher-ng'],
   }
 
-  file { '/etc/apt_cacher_ng/acng.conf':
+  file { '/etc/apt-cacher-ng/acng.conf':
     source  => ["puppet:///modules/site-apt_cacher_ng/${::fqdn}/acng.conf",
       'puppet:///modules/site-apt_cacher_ng/acng.conf',
       'puppet:///modules/apt_cacher_ng/acng.conf'],
-    notify  => Service['apt_cacher_ng'],
-    require => Package['apt_cacher_ng'],
+    notify  => Service['apt-cacher-ng'],
+    require => Package['apt-cacher-ng'],
   }
 
-  file { '/var/cache/apt_cacher_ng':
+  file { '/var/cache/apt-cacher-ng':
     ensure  => directory,
-    owner   => 'apt_cacher_ng',
-    require => Package['apt_cacher_ng'],
+    owner   => 'apt-cacher-ng',
+    require => Package['apt-cacher-ng'],
   }
 }
