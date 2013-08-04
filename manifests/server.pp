@@ -1,26 +1,26 @@
-class apt-cacher-ng::server(
+class apt_cacher_ng::server(
   $version = 'installed'
 ) {
-  package { 'apt-cacher-ng':
+  package { 'apt_cacher_ng':
     ensure => $version,
   }
 
-  service { 'apt-cacher-ng':
+  service { 'apt_cacher_ng':
     ensure  => running,
-    require => Package['apt-cacher-ng'],
+    require => Package['apt_cacher_ng'],
   }
 
-  file { '/etc/apt-cacher-ng/acng.conf':
-    source  => ["puppet:///modules/site-apt-cacher-ng/${::fqdn}/acng.conf",
-               'puppet:///modules/site-apt-cacher-ng/acng.conf',
-               'puppet:///modules/apt-cacher-ng/acng.conf'],
-    notify  => Service['apt-cacher-ng'],
-    require => Package['apt-cacher-ng'],
+  file { '/etc/apt_cacher_ng/acng.conf':
+    source  => ["puppet:///modules/site-apt_cacher_ng/${::fqdn}/acng.conf",
+      'puppet:///modules/site-apt_cacher_ng/acng.conf',
+      'puppet:///modules/apt_cacher_ng/acng.conf'],
+    notify  => Service['apt_cacher_ng'],
+    require => Package['apt_cacher_ng'],
   }
 
-  file { '/var/cache/apt-cacher-ng':
+  file { '/var/cache/apt_cacher_ng':
     ensure  => directory,
-    owner   => 'apt-cacher-ng',
-    require => Package['apt-cacher-ng'],
+    owner   => 'apt_cacher_ng',
+    require => Package['apt_cacher_ng'],
   }
 }

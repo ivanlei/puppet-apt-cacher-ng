@@ -1,69 +1,54 @@
-class apt-cacher-ng::client(
-  $server = "",
-  $servers = "",
+class apt_cacher_ng::client(
+  $servers    = undef,
   $autodetect = true,
-  $verbose = true
+  $verbose    = true,
+  $apt_update = false,
 ) {
+  validate_array($servers)
+  validate_bool($autodetect, $verbose, $apt_update)
 
+  # Swap into numeric
+  $show_proxy_messages = bool2num($verbose)
+
+  # Set some defaults for files created by this class
   File {
     owner  => root,
     group  => root,
     mode   => '0644',
     ensure => present,
   }
-  case $autodetect {
-    false: {
-      case $server {
-        "": { fail("server not specified") }
-        default: { }
-      }
-      case $servers {
-        "": { }
-        default: { fail("servers must only be specified with autodetect=true") }
-      }
-      file { "/etc/apt/apt.conf.d/71proxy":
-        content => "Acquire::http { Proxy \"http://${server}\"; };",
-      }
-      file { "/etc/apt/apt.conf.d/30detectproxy":
-        ensure => absent,
-      }
+
+  if $autodetect == false {
+    file { '/etc/apt/apt.conf.d/71proxy':
+      content => template('apt_cacher_ng/71proxy.erb'),
     }
-    true: {
-      file { "/etc/apt/apt.conf.d/71proxy":
-        ensure => absent,
-      }
-      file { "/etc/apt/apt.conf.d/30detectproxy":
-        source => "puppet:///modules/apt-cacher-ng/30detectproxy",
-      }
-      case $verbose {
-        true:    { $show_proxy_messages = 1 }
-        false:   { $show_proxy_messages = 0 }
-        default: { fail("verbose must be true or false, not ${verbose}.") }
-      }
-      case $server {
-        "":      { 
-          case $servers {
-            "":      { fail("must specify either server or servers") }
-            default: { $proxies = $servers }
-          }
-        }
-        default: {
-          case $servers {
-            "":      { $proxies = [$server] }
-            default: { fail("cannot specify both server and servers") }
-          }
-        }
-      }
-      file { "/etc/apt/detect-http-proxy": 
-        source => "puppet:///modules/apt-cacher-ng/detect-http-proxy",
-        mode   => '0755',
-      }
-      file { "/etc/apt/proxy.conf":
-        content => template("apt-cacher-ng/apt-proxy-conf.erb"),
-      }
+
+    file { '/etc/apt/apt.conf.d/30detectproxy':
+      ensure => absent,
     }
-    default: {
-      fail("autodetect must be true or false, not ${autodetect}.")
+
+  } else {
+    file { '/etc/apt/apt.conf.d/71proxy':
+      ensure => absent,
+    }
+
+    file { '/etc/apt/apt.conf.d/30detectproxy':
+      source => 'puppet:///modules/apt_cacher_ng/30detectproxy',
+    }
+
+    file { '/etc/apt/detect-http-proxy':
+      source => 'puppet:///modules/apt_cacher_ng/detect-http-proxy',
+      mode   => '0755',
+    }
+
+    file { '/etc/apt/proxy.conf':
+      content => template('apt_cacher_ng/apt-proxy-conf.erb'),
+    }
+  }
+
+  if $apt_update {
+    class { 'apt':
+      always_apt_update => true
     }
   }
 }

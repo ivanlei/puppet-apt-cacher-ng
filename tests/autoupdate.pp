@@ -1,3 +1,4 @@
-class { 'apt-cacher-ng::autoupdate_client':
-  server => "${aptserver_ip}:3142"
+class { 'apt_cacher_ng::client':
+  servers     => ["${aptserver_ip}:3142"],
+  apt_update  => true,
 }

@@ -11,7 +11,7 @@ show_proxy_messages=<%=show_proxy_messages%>
 # be available on the top. If no proxy is available, a direct connection will
 # be used
 try_proxies=(
-<% proxies.each do |proxy| -%>
+<% servers.each do |proxy| -%>
 <%=proxy%>
 <% end -%>
 )
