@@ -10,18 +10,12 @@ Vagrant.configure('2') do |global_config|
   bad_aptserver_ip = '10.7.77.10'
 
   vms = {
-    :server => {
+    'apt-cacher-ng-server' => {
       :ip           => aptserver_ip,
     },
-    :client => {
+    'apt-cacher-ng-client' => {
       :ip           => '10.6.66.20',
       :debug        => true,
-    },
-    :autodetect => {
-      :ip           => '10.6.66.30',
-    },
-    :autoupdate => {
-      :ip           => '10.6.66.40',
     },
   }
 
@@ -93,11 +87,9 @@ Vagrant.configure('2') do |global_config|
       # Puppet  #
       ###########
       config.vm.provision :puppet do |puppet|
-        puppet.module_path    = '..'
+        puppet.module_path    = './modules'
         puppet.manifests_path = './tests'
         puppet.manifest_file  = "#{vm_name}.pp"
-        puppet.hiera_config_path = '/vms/hiera.yaml'
-        puppet.working_directory = '/vms/hieradata'
         if debug
           puppet.options = "--verbose --debug"
         end

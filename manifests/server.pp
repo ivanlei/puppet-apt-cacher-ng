@@ -22,9 +22,7 @@ class apt_cacher_ng::server(
   }
 
   file { '/etc/apt-cacher-ng/acng.conf':
-    source  => ["puppet:///modules/site-apt_cacher_ng/${::fqdn}/acng.conf",
-      'puppet:///modules/site-apt_cacher_ng/acng.conf',
-      'puppet:///modules/apt_cacher_ng/acng.conf'],
+    source  => 'puppet:///modules/apt_cacher_ng/acng.conf',
     notify  => Service['apt-cacher-ng'],
     require => Package['apt-cacher-ng'],
   }
