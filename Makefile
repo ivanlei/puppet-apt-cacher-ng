@@ -1,6 +1,6 @@
 module_name = apt_cacher_ng
 
-apply = puppet apply --noop --modulepath=.. --verbose --debug
+apply = puppet apply --noop --modulepath=./modules --verbose --debug
 parse = puppet parser validate
 lint = puppet-lint --no-80chars-check --with-filename
 
